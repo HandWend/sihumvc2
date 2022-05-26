@@ -7,4 +7,5 @@ import domain.BoardVO;
 public interface ListService {
 
 	public Collection<BoardVO> read();
+	
 }

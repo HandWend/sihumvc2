@@ -13,11 +13,13 @@ import javax.servlet.http.HttpServletResponse;
 import domain.BoardInfo;
 import domain.BoardVO;
 import service.ListServiceImpl;
+import service.WriterService;
+import service.WriterServiceImpl;
 
 /**
  * Servlet implementation class WriterController
  */
-@WebServlet("/List")
+@WebServlet("/list")
 public class ListController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -32,59 +34,86 @@ public class ListController extends HttpServlet {
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
-    //바로 보여주면 되므로 get방식
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
-		//mapper 갔다 와야 함.
+		
 		ListServiceImpl service = new ListServiceImpl();
 		
-		//paging
-		int pageCount = 5;	//아래에 보여줄 쪽수의 갯수
-		int pageRow = 5;	//한 페이지에 보여줄 게시글 갯수
-		int pageNum =  1;	//페이지 넘버
-		int pagingNum = 5;	//
+		//페이징
+		int pageCount = 5;
+		int pageRow = 3;//페이지당 보여줄 게시물 갯수
+		int pageNum = 1;
+		int pagingNum = 5;
 		
-		if (request.getParameter("pageNum") != null) {
+		if(request.getParameter("pageNum") != null){
 			pageNum = Integer.parseInt(request.getParameter("pageNum"));
 		}
 		
 		int startPage = (pageNum - 1) * pageRow;
+
 		
-		BoardInfo boardInfo = service.boardInfo(startPage, pageRow);
+		String field = request.getParameter("field");
+		if(field == null) {
+			field = "";
+		}
 		
-		//글번호
-		int totalNum = boardInfo.getTotalRow() -((pageNum - 1) * pageRow);
+		String keyWord = request.getParameter("keyWord");
+		if(keyWord == null) {
+			keyWord = "";
+		}
+		
+		String keyWordT = request.getParameter("keyWordT");
+		if(keyWordT == null) {
+			keyWordT = "";
+		}
+		
+		String keyWordC = request.getParameter("keyWordC");
+		if(keyWordC == null) {
+			keyWordC = "";
+		}
+		
+		String keyWordW = request.getParameter("keyWordW");
+		if(keyWordW == null) {
+			keyWordW = "";
+		}
+		
+		BoardInfo boardInfo = service.boardInfo(startPage, pageRow, field, keyWord);
+		
+		//글번호 넘버링
+		int totalNum = boardInfo.getTotalRow()-((pageNum - 1) * pageRow);
 		
 		//페이징
-		int startNum = ((pageNum - 1) / pagingNum) * pagingNum +1;
-		
+		int startNum = (((pageNum-1)/pagingNum)*pagingNum)+1;
+
 		request.setAttribute("pagingNum", pagingNum);
 		request.setAttribute("startNum", startNum);
-		
+
 		request.setAttribute("pageRow", pageRow);
 		
 		request.setAttribute("totalNum", totalNum);
 		request.setAttribute("boardInfo", boardInfo);
 		request.setAttribute("pageNum", pageNum);
-		//parameter값 가져갈 거 없음
-		/*
-		 * Collection<BoardVO> list = service.read();
-		 * 
-		 * //전체 행 int totalRow = service.totalRow();
-		 * 
-		 * //listmapper에 있는 list값이 넘어갈 것이다. request.setAttribute("list", list);
-		 * request.setAttribute("totalRow", totalRow);
-		 */
+
+		request.setAttribute("field", field);
+		request.setAttribute("keyWord", keyWord);
 		
+		request.setAttribute("keyWordT", keyWordT);
+		request.setAttribute("keyWordC", keyWordC);
+		request.setAttribute("keyWordW", keyWordW);
+		
+//		Collection<BoardVO> list = service.read();
+//		int totalRow = service.totalRow();
+//		
+//		request.setAttribute("list", list);
+//		request.setAttribute("totalRow", totalRow);
 		
 		
 		RequestDispatcher dispatcher = request.getRequestDispatcher("list.jsp");
 		dispatcher.forward(request, response);
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	
 
 }
+
+
+

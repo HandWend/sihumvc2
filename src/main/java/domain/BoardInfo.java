@@ -6,7 +6,14 @@ public class BoardInfo {
 
 	private Collection<BoardVO> list;
 	private int totalRow;
+	private int totalSearch;
 	
+	public int getTotalSearch() {
+		return totalSearch;
+	}
+	public void setTotalSearch(int totalSearch) {
+		this.totalSearch = totalSearch;
+	}
 	public Collection<BoardVO> getList() {
 		return list;
 	}

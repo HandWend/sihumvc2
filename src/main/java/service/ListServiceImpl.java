@@ -6,16 +6,14 @@ import domain.BoardInfo;
 import domain.BoardVO;
 import mapper.ListMapper;
 
-public class ListServiceImpl implements ListService{
+public class ListServiceImpl implements ListService {
 
-	//기존에 만든 것들을 지울 필요없다.
 	@Override
 	public Collection<BoardVO> read() {
 		return new ListMapper().read();
 	}
 
-	//deprecated: 추천하지 않는다.
-	@Deprecated
+
 	public int totalRow() {
 		return new ListMapper().totalRow();
 	}
@@ -27,13 +25,26 @@ public class ListServiceImpl implements ListService{
 		return boardInfo;
 	}
 
-	public BoardInfo boardInfo(int startPage, int pageRow) {
+
+	public BoardInfo boardInfo(int startPage, int pageRow, String field, String keyWord) {
 		BoardInfo boardInfo = new BoardInfo();
-		boardInfo.setList(new ListMapper().read(startPage, pageRow));
-		boardInfo.setTotalRow(new ListMapper().totalRow());
+		boardInfo.setList(new ListMapper().read(startPage, pageRow, field, keyWord));
+		boardInfo.setTotalRow(new ListMapper().totalRow(field, keyWord));
 		return boardInfo;
 	}
+	
+	public BoardInfo boardInfo(int startPage, int pageRow, String field, String keyWord, String keyWordT, String keyWordC, String keyWordW) {
+		BoardInfo boardInfo = new BoardInfo();
+		boardInfo.setList(new ListMapper().read(startPage, pageRow, field, keyWord, keyWordT, keyWordC, keyWordW));
+		boardInfo.setTotalRow(new ListMapper().totalRow(field, keyWord));
+		return boardInfo;
+	}
+
 
 	
 
 }
+
+
+
+

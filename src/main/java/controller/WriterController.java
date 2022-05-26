@@ -15,7 +15,7 @@ import service.WriterServiceImpl;
 /**
  * Servlet implementation class WriterController
  */
-@WebServlet("/Writer")
+@WebServlet("/writer")
 public class WriterController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
