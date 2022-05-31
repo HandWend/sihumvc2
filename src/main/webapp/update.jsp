@@ -1,3 +1,4 @@
+<%@page import="domain.BoardVO"%>
 <%@page import="java.sql.*"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
@@ -71,7 +72,7 @@
 <!-- num값을 받아온 걸 넣어주자. 
 사이트에는 출력되지 않아야 하므로 type="hidden"으로 바꿔준다.
 넘겨받은 값은 pk, 그에 담긴 rs값들을 아래 value에 넣어준다. -->
-	<form method="post" action="updateAct.jsp">
+	<form method="post" action="update" enctype="multipart/form-data">
 	<input type="hidden" name="num" value="<%=num %>">
 		<table class="table">
 			<tr>
@@ -81,6 +82,10 @@
 			<tr>
 				<th>내용</th>
 				<td><textarea name="content" class="form-control"><%=content %></textarea></td>
+			</tr>
+			<tr>
+				<th>첨부파일</th>
+				<td><input type="file" name="upfile" class="form-control" ></td>
 			</tr>
 			<tr>
 				<th>작성자</th>

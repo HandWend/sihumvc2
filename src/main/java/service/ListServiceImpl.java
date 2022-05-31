@@ -28,7 +28,9 @@ public class ListServiceImpl implements ListService {
 
 	public BoardInfo boardInfo(int startPage, int pageRow, String field, String keyWord) {
 		BoardInfo boardInfo = new BoardInfo();
-		boardInfo.setList(new ListMapper().read(startPage, pageRow, field, keyWord));
+		/*
+		 * boardInfo.setList(new ListMapper().read(startPage, pageRow, field, keyWord));
+		 */
 		boardInfo.setTotalRow(new ListMapper().totalRow(field, keyWord));
 		return boardInfo;
 	}

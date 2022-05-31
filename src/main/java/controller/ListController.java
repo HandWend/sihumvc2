@@ -62,6 +62,7 @@ public class ListController extends HttpServlet {
 			keyWord = "";
 		}
 		
+		//추가 0526: 각각 검색 keyWordT, C, W
 		String keyWordT = request.getParameter("keyWordT");
 		if(keyWordT == null) {
 			keyWordT = "";
@@ -77,7 +78,8 @@ public class ListController extends HttpServlet {
 			keyWordW = "";
 		}
 		
-		BoardInfo boardInfo = service.boardInfo(startPage, pageRow, field, keyWord);
+		//추가 0526: 각각 검색 keyWordT, C, W
+		BoardInfo boardInfo = service.boardInfo(startPage, pageRow, field, keyWord, keyWordT, keyWordC, keyWordW);
 		
 		//글번호 넘버링
 		int totalNum = boardInfo.getTotalRow()-((pageNum - 1) * pageRow);
@@ -97,6 +99,7 @@ public class ListController extends HttpServlet {
 		request.setAttribute("field", field);
 		request.setAttribute("keyWord", keyWord);
 		
+		//추가: 각각검색
 		request.setAttribute("keyWordT", keyWordT);
 		request.setAttribute("keyWordC", keyWordC);
 		request.setAttribute("keyWordW", keyWordW);
